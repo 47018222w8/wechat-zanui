@@ -1,0 +1,47 @@
+/* pages/index/index.wxss */
+
+.slide-image {
+  width: 750rpx;
+}
+
+.font-hot {
+  font-size: 18px;
+  font-weight: 600;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+.img-a {
+  width: 750rpx;
+  height: 300rpx;
+}
+
+view {
+  font-size: 14px;
+  color: #333;
+  font-family: PingFangSC-Semibold;
+}
+.flex-a {
+  display: flex;
+  flex-direction: row;
+}
+.flex-a-item-a {
+  flex:0 0 70%;padding-left:10px;font-size:16px;
+}
+.flex-a-item-a text {
+  font-size:18px;color:#FD5801;font-weight:600;
+}
+.flex-a button {
+  background: #FD5801;color:#fff;
+}
+.desc-a {
+  padding-top:10px;
+  padding-bottom:10px;
+}
+.desc-son-a{
+  font-size:16px;font-weight:600;
+}
+.desc-son-b {
+  padding-left:10px;padding-top:10px;padding-bottom:10px;
+}

@@ -1,0 +1,41 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/group/index",
+    "pages/order-success/index"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#FAFAFA",
+    "navigationBarTitleText": "ZanUI-WeApp",
+    "navigationBarTextStyle": "black",
+    "backgroundTextStyle": "dark",
+    "backgroundColor": "#f9f9f9"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "text": "首页",
+        "pagePath": "pages/index/index",
+        "iconPath": "image/home.png",
+        "selectedIconPath": "image/home-select.png"
+      },
+      {
+        "text": "我的拼团",
+        "pagePath": "pages/group/index",
+        "iconPath": "image/people.png",
+        "selectedIconPath": "image/people-select.png"
+      },
+      {
+        "text": "我的订单",
+        "pagePath": "pages/order-success/index",
+        "iconPath": "image/order.png",
+        "selectedIconPath": "image/order-select.png"
+      }
+    ],
+    "position": "bottom",
+    "backgroundColor": "#fffff",
+    "selectedColor": "#FD5801",
+    "color": "#999"
+  },
+  "debug": true
+}
