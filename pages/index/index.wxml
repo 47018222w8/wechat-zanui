@@ -7,7 +7,7 @@
     </block>
   </swiper>
   <view class="font-hot">火拼中</view>
-  <image src="http://192.168.1.136:9008/img/index-a.png" class="img-a" />
+  <image src="http://58.87.98.173:9008/img/index-a.png" class="img-a" />
   <view class="desc-a">
     <view class="desc-son-a">【最新特惠】腾讯大王卡团购</view>
     <view class="desc-son-b">全国腾讯流量全免，首充50得50，首月可免费体验</view>
@@ -17,7 +17,7 @@
       <button size="mini" bindtap="toGroupBuy">去拼团 ></button>
     </view>
   </view>
-  <image src="http://192.168.1.136:9008/img/index-b.png" class="img-a" />
+  <image src="http://58.87.98.173:9008/img/index-b.png" class="img-a" />
   <view class="desc-a">
     <view class="desc-son-a">【最新特惠】腾讯大王卡团购</view>
     <view class="desc-son-b">全国腾讯流量全免，首充50得50，首月可免费体验</view>

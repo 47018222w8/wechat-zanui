@@ -6,7 +6,7 @@ Page({
    */
   data: {
     imgUrls:[
-      'http://192.168.1.136:9008/img/index-c.png','http://192.168.1.136:9008/img/2.jpg'
+      'http://58.87.98.173:9008/img/index-c.png','http://58.87.98.173:9008/img/2.jpg'
     ]
   },
   toGroupBuy: function(e) {

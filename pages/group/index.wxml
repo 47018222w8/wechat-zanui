@@ -1,5 +1,5 @@
 <view>
-  <image src="http://192.168.1.136:9008/img/group-a.png" class="img-a" />
+  <image src="http://58.87.98.173:9008/img/group-a.png" class="img-a" />
   <view class="desc-a">
     <view class="flex-a">
       <view class="flex-a-item-a">【腾讯大王卡】存50送50</view>
@@ -51,7 +51,7 @@
   <view style="background-color:#f7f7f7;height:10px;"></view>
   <view style="margin-bottom:44px;">
   <view style="font-size:16px;color:#666;font-weight:600;padding:10px;">商品详情</view>
-  <image src="http://192.168.1.136:9008/img/3.jpg" class="img-a" />
+  <image src="http://58.87.98.173:9008/img/3.jpg" class="img-a" />
   </view>
   <view class="bottom-bar">
     <navigator url="../index/index" open-type="reLaunch" class="bar-a">

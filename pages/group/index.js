@@ -8,7 +8,7 @@ Page({
   data: {
     hasUserInfo: false,
     imgUrls: [
-      'http://192.168.1.136:9008/img/1.jpg', 'http://192.168.1.136:9008/img/2.jpg'
+      'http://58.87.98.173:9008/img/1.jpg', 'http://58.87.98.173:9008/img/2.jpg'
     ],
     timer: null,
     h: '00',
