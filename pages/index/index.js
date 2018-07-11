@@ -16,7 +16,24 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-   
+    wx.login({
+      success: function (res) {
+        if (res.code) {
+          //发起网络请求
+          wx.request({
+            url: 'http://192.168.1.136:1007/phoneCard/v1/noIntercept/sessions',
+            data: {
+              code: res.code
+            },
+            success:function(res){
+              wx.setStorageSync('token', res.data)
+            }
+          })
+        } else {
+          console.log('登录失败！' + res.errMsg)
+        }
+      }
+    });
   },
 
   /**

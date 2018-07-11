@@ -78,9 +78,10 @@ Page({
     var that = this
 
     if (app.globalData.hasLogin === false) {
-      wx.login({
-        success: _getUserInfo
-      })
+      // wx.login({
+      //   success: _getUserInfo
+      // })
+      _getUserInfo()
     } else {
       _getUserInfo()
     }
