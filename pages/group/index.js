@@ -42,7 +42,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    
+    if (!wx.getStorageSync('activityList')) {
+      this.getGroupActivites()
+    }
+    if (!wx.getStorageSync('openid')) {
+      this.getOpenId()
+    }
     this.setData({
       offeringId: options.offeringId
     })
@@ -54,6 +59,7 @@ Page({
     let endDate = new Date(arrEnd[0], arrEnd[1]-1, arrEnd[2], arrEnd[3], arrEnd[4], arrEnd[5]).getTime()
     let now = new Date().getTime()
     if (beginDate < now < endDate) {
+      
       this.setData({
         activeState: 1,
         endDate: endDate,
@@ -66,6 +72,34 @@ Page({
         activeState: 2
       })
     }
+  },
+  getGroupActivites() {
+    wx.request({
+      url: app.globalData.urlHeaderB + 'product/v1/activity/queryGroupActivities',
+      data: {
+        pageNumber: 1,
+        pageSize: 10,
+        activityName: '团购',
+        touchId: '',//正式需要获取
+        activityType: '2'
+      },
+      method: 'POST',
+      success: (res) => {
+        if (res.data.code === 0) {
+          this.setData({
+            activityList: wx.getStorageSync('activityList')
+          })
+          wx.setStorageSync('activityList', res.data.activityList)
+        }
+      },
+      faile: (res) => {
+        wx.hideLoading()
+        wx.showToast({
+          title: '服务器错误',
+          icon: 'none'
+        })
+      }
+    })
   },
   getGoodsInfo() {
     wx.request({
@@ -88,33 +122,53 @@ Page({
     })
   },
   getGroupInfo() {
-    wx.request({
-      url: app.globalData.urlHeaderA+'groups',
-      data: {
-        offeringId: this.data.offeringId,
-        openid: wx.getStorageSync('openid')
-      },
-      success: (res) => {
-        let groupList = []
-        let i = 0
-        while (i < res.data.list.length) {
-          let arry = [res.data.list[i], res.data.list[i + 1]]
-          groupList.push(arry)
-          i += 2;
-        }
-        this.setData({
-          allCount: res.data.allCount,
-          groupList: groupList
-        })
-        console.log(groupList)
-      },
-      faile: (res) => {
-        wx.showToast({
-          title: '服务器错误',
-          icon: 'none'
+    wx.login({
+      success: (data) => {
+        wx.request({
+          url: app.globalData.urlHeaderA + 'openid',
+          data: {
+            code: data.code
+          },
+          success: (res) => {
+            wx.setStorageSync('openid', res.data)
+            wx.request({
+              url: app.globalData.urlHeaderA + 'groups',
+              data: {
+                offeringId: this.data.offeringId,
+                openid: res.data
+              },
+              success: (res) => {
+                let groupList = []
+                let i = 0
+                while (i < res.data.list.length) {
+                  let arry = [res.data.list[i], res.data.list[i + 1]]
+                  groupList.push(arry)
+                  i += 2;
+                }
+                this.setData({
+                  allCount: res.data.allCount,
+                  groupList: groupList
+                })
+                console.log(groupList)
+              },
+              faile: (res) => {
+                wx.showToast({
+                  title: '服务器错误',
+                  icon: 'none'
+                })
+              }
+            })
+          },
+          faile: (res) => {
+            wx.showToast({
+              title: '服务器错误',
+              icon: 'none'
+            })
+          }
         })
       }
-    })
+    });
+   
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -161,8 +215,16 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
-
+  onShareAppMessage: function (res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: '拼啦！5折捡漏就差你',
+      // path: 'pages/index/index'
+      path: '/pages/group/index?offeringId=' + this.data.offeringId + '&beginDate=' + this.data.activityList[0].effectiveDate + '&endDate=' + this.data.activityList[0].expireDate
+    }
   },
   getUserInfo: function() {
     var that = this

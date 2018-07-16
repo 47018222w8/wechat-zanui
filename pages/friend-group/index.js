@@ -12,7 +12,7 @@ Page({
     s: '00',
     endDate: null,
     num: null,
-    info:null,
+    info: null,
     allCount: 0,
     goodsImgs: [
       'http://58.87.98.173:9008/img/index-b.png',
@@ -27,8 +27,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    console.log(options)
+  onLoad: function(options) {
     this.getGroupActivites()
     let list = wx.getStorageSync('activityList')
     let arrEnd = list[0].expireDate.split(/[- : \/]/)
@@ -45,23 +44,27 @@ Page({
     })
     this.countTime()
     this.getOpenId()
-    console.log(1)
+
     this.getGoodsInfo()
-    console.log(2)
+
     this.getOrder()
-    console.log(3)
+
     this.getGroupInfo()
-    console.log(4)
+
   },
   toHome() {
-    wx.reLaunch({ url: '/pages/index/index' })
+    wx.reLaunch({
+      url: '/pages/index/index'
+    })
   },
-  toGroupBuy: function (e) {
-    wx.navigateTo({ url: '/pages/group/index?offeringId=' + e.target.dataset.id + '&beginDate=' + this.data.activityList[0].effectiveDate + '&endDate=' + this.data.activityList[0].expireDate })
+  toGroupBuy: function(e) {
+    wx.navigateTo({
+      url: '/pages/group/index?offeringId=' + e.target.dataset.id + '&beginDate=' + this.data.activityList[0].effectiveDate + '&endDate=' + this.data.activityList[0].expireDate
+    })
   },
   getOrder() {
     wx.request({
-      url: app.globalData.urlHeaderA+'myGroups/' + this.data.pid,
+      url: app.globalData.urlHeaderA + 'myGroups/' + this.data.pid,
       success: (res) => {
         this.setData({
           info: res.data
@@ -77,7 +80,7 @@ Page({
   },
   getGoodsInfo() {
     wx.request({
-      url: app.globalData.urlHeaderB+'product/v1/offering/getOffer',
+      url: app.globalData.urlHeaderB + 'product/v1/offering/getOffer',
       data: {
         offeringId: this.data.offeringId,
         eparchyCode: 431
@@ -97,13 +100,13 @@ Page({
   },
   getGroupInfo() {
     wx.request({
-      url: app.globalData.urlHeaderA+'groups',
+      url: app.globalData.urlHeaderA + 'groups',
       data: {
         offeringId: this.data.offeringId,
         openid: wx.getStorageSync('openid')
       },
       success: (res) => {
-        
+
         this.setData({
           allCount: res.data.allCount
         })
@@ -118,12 +121,12 @@ Page({
   },
   getGroupActivites() {
     wx.request({
-      url: app.globalData.urlHeaderB+'product/v1/activity/queryGroupActivities',
+      url: app.globalData.urlHeaderB + 'product/v1/activity/queryGroupActivities',
       data: {
         pageNumber: 1,
         pageSize: 10,
         activityName: '团购',
-        touchId: '',//正式需要获取
+        touchId: '', //正式需要获取
         activityType: '2'
       },
       method: 'POST',
@@ -145,14 +148,16 @@ Page({
     wx.login({
       success: (data) => {
         wx.request({
-          url: app.globalData.urlHeaderA+'openid',
+          url: app.globalData.urlHeaderA + 'openid',
           data: {
             code: data.code
           },
           success: (res) => {
             wx.setStorageSync('openid', res.data)
             if (res.data === this.data.pOpenid) {
-              wx.reLaunch({ url: '/pages/index/index' })
+              wx.reLaunch({
+                url: '/pages/index/index'
+              })
             }
           },
           faile: (res) => {
@@ -166,7 +171,7 @@ Page({
     });
 
   },
-  toOrder: function (e) {
+  toOrder: function(e) {
     wx.navigateTo({
       url: '/pages/order/index?orderType=1&offeringId=' + this.data.offeringId + '&pid=' + this.data.pid + '&memberNum=' + wx.getStorageSync('activityList')[0].upGroupRule.gpMembersNum + '&goodsName=' + this.data.goodsName
     })
@@ -174,46 +179,46 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
     console.log(111111)
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
-  countTime: function () {
+  countTime: function() {
     this.data.timer = setTimeout((e) => {
       //获取当前时间
       let date = new Date();

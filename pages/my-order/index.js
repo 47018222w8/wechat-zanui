@@ -12,13 +12,16 @@ Page({
         title: '全部'
       }, {
         id: 1,
-        title: '待付款'
+        title: '已受理'
       }, {
         id: 2,
-        title: '待发货'
+        title: '准备上门'
       }, {
         id: 3,
-        title: '待收货'
+        title: '受理完成'
+      }, {
+        id: 4,
+        title: '已退单'
       }],
       selectedId: 0
     },

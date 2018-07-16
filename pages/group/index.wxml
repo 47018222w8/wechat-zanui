@@ -18,6 +18,7 @@
   </view>
   <view class="desc-b">
     拼团不成功,闪电退款
+    <button size="mini" open-type="share" style="margin-right:10px">分享</button>
   </view>
   <view wx:if="{{groupList.length}}" class="desc-c">
     <view style="display:flex;font-size:12px;padding-bottom:20px;justify-content:space-between;">
@@ -54,7 +55,7 @@
   <view style="background-color:#f7f7f7;height:10px;"></view>
   <view style="margin-bottom:44px;">
   <view style="font-size:16px;color:#666;font-weight:600;padding:10px;">商品详情</view>
-  <image src="http://58.87.98.173:9008/img/3.jpg" class="img-a" />
+  <image src="detail.picList[0].picUrl" class="img-a" />
   </view>
   <view class="bottom-bar">
     <navigator url="../index/index" open-type="reLaunch" class="bar-a">
