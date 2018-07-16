@@ -1,0 +1,20 @@
+<view>
+  <zan-tab bindtabchange="changeTab" fixed list="{{ tab1.list }}" selected-id="{{ tab1.selectedId }}" />
+   <view hidden="{{selectedId !== 0}}" wx:for="{{list}}">
+    <view class="flex-a">
+      <view style="font-weight:600;">沃拼团</view>
+      <view style="color:#ff3d00;">{{item.orderState}}</view>
+    </view>
+    <view bindtap="toInfo" data-ordernum="{{item.orderNum}}" data-id="{{item.uId}}" class="flex-b">
+      <image class="flex-b-item-a" src="http://58.87.98.173:9008/img/index-b.png"></image>
+      <view>
+        <view>{{item.goodsName}}</view>
+        <!-- <view style="padding-left:5px;">存50送50</view> -->
+      </view>
+    </view>
+    <view  class="flex-c">
+      <view>{{item.orderDate}}</view>
+    </view>
+  </view>
+  <view wx:if="{{!list.length}}" style="text-align:center;">暂无订单</view>
+</view>

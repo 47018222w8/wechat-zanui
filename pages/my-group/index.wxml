@@ -1,0 +1,27 @@
+<view class="all">
+  <view wx:if="{{list[0].avatarUrl}}" class="flex-title">
+    <image class="flex-title-item-a" src="{{list[0].avatarUrl}}"></image>
+    <view class="flex-title-item-b">{{list[0].nickName}}</view>
+  </view>
+  <view wx:for="{{list}}">
+    <view class="flex-a">
+      <view wx:if="{{item.pid==0}}">我发起的拼团</view>
+      <view wx:else>我参与的拼团</view>
+      <view wx:if="{{item.done==0}}">拼单中</view>
+      <view wx:if="{{item.done==1}}">已完成</view>
+      <view wx:if="{{item.done==2}}" >已结束</view>
+    </view>
+    <view bindtap="toInfo" data-id="{{item.id}}" class="flex-b">
+      <image class="flex-b-item-a" src="http://58.87.98.173:9008/img/index-b.png"></image>
+      <view>
+        <view>{{item.goodsName}}</view>
+        <!-- <view style="padding-left:5px;">存50送50</view> -->
+      </view>
+    </view>
+    <view wx:if="{{item.pid==0}}" class="flex-c">
+      <button class="flex-c-item-b" data-offid="{{item.offeringId}}" data-openid="{{item.openid}}" data-name="{{item.goodsName}}" data-id="{{item.id}}" open-type="share" >邀请好友拼单</button>
+    </view>
+  </view>
+  <view wx:if="{{!list.length}}" style="text-align:center;background-color:#fff;">暂无拼团</view>
+  <view></view>
+</view>

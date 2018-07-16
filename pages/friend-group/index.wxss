@@ -1,0 +1,83 @@
+.flex-b{
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color:#101010;
+}
+.flex-b-item-a{
+  width:90px;
+  height: 75px;
+  padding:15px;
+  
+}
+.flex-a {
+  display: flex;
+  font-size:12px;
+  color:#666;
+  align-items: center;
+    background-color: #f1f1f1;
+  padding:5px;
+}
+.flex-a-item{
+  text-align: center;
+  flex: 1;
+}
+.flex-c {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top:10px;
+  margin-bottom: 10px;
+}
+.userinfo-avatar {
+  border-radius: 100rpx;
+  width: 100rpx;
+  height: 100rpx;
+  margin-right: 10px;
+}
+.why-cicle {
+   border-radius: 100rpx;
+  width: 100rpx;
+  height: 100rpx;
+  border:1px solid #999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left:10px;
+}
+.c-hr {
+  margin: 0 auto;
+  border-bottom: 1px solid #ebebeb;
+}
+.c-bottom {
+  display: flex;
+  justify-content: space-between;
+  padding-top:10px;
+  padding-bottom:10px;
+}
+.flex-d {
+  display: flex;
+  align-items: center;
+  font-size:18px;
+  color: #666;
+  padding-top:10px;
+  padding-bottom:10px;
+}
+.flex-d-item-b {
+  padding-bottom:5px;
+  border-bottom:2px solid #FF3D00;
+}
+.img-a {
+  width: 750rpx;
+  height: 300rpx;
+}
+.desc-a {
+  padding-top:10px;
+  padding-bottom:10px;
+}
+.desc-son-a{
+  font-size:16px;font-weight:600;
+}
+.desc-son-b {
+  padding-left:10px;padding-top:10px;padding-bottom:10px;
+}

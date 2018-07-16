@@ -1,0 +1,44 @@
+<view>
+  <view class="flex-title">
+    <view style="padding:15px;">
+      <view style="font-weight:600;font-size:16px">拼单还未成功</view>
+      <view style="font-size:16px">让小伙伴们都来拼单吧~</view>
+    </view>
+    <image style="height: 92rpx;width:67rpx;padding-right:10px;" src="http://58.87.98.173:9008/img/hourglass.png"></image>
+  </view>
+  <view style="background-color:#f7f7f7;padding-top:25px;padding-bottom:25px;">
+    <view class="flex-b">
+      <image class="userinfo-avatar" src="{{info.avatarUrl}}"></image>
+      <view class="why-cicle">?</view>
+    </view>
+    <view class="desc-a">再来 <text>{{info.num-1}}</text> 个小伙伴，大家一起拼团买吧！</view>
+    <view class="flex-c">
+      <view class="flex-c-item"></view>
+      <view style="font-size:14px;">
+      剩余
+      <text class="time-a">{{h}}</text>:
+        <text class="time-a">{{m}}</text>:
+        <text class="time-a">{{s}}</text>
+      结束
+      </view>
+      <view class="flex-c-item"></view>
+    </view>
+  </view>
+  <view class="flex-d">
+      <view style="font-weight:600;padding-left:14px;">拼单商品</view>
+      <view style="padding-right:10px;color:#666;">
+        <image src="http://58.87.98.173:9008/img/phone.png" style="width:14px;height:16px"></image>
+        商家电话
+      </view>
+    </view>
+    <view  class="flex-e">
+      <image class="flex-e-item-a" src="http://58.87.98.173:9008/img/index-b.png"></image>
+      <view>
+        <view>{{info.goodsName}}</view>
+        <!-- <view style="padding-left:5px;">存50送50</view> -->
+      </view>
+    </view>
+    <view wx:if="{{info.pid==0}}" class="flex-f">
+      <button class="flex-f-item-b" data-offid="{{info.offeringId}}" data-openid="{{info.openid}}" data-name="{{info.goodsName}}" data-id="{{info.id}}" open-type="share" >邀请好友拼单</button>
+    </view>
+</view>

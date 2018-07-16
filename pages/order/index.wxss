@@ -1,0 +1,70 @@
+.flex-input{
+  display: flex;
+  padding:10px 15px 5px 15px;
+}
+.flex-input-title {
+  flex: auto;
+  font-size: 14px;
+  color: #333;
+}
+.flex-input-value {
+  flex: 1;
+  text-align: right;
+  width: 100%;
+  font-size: 14px;
+}
+.flex-picker {
+  flex: 1;
+  text-align: right;
+  width: 100%;
+  font-size: 14px;
+}
+.input-hr {
+  width: 93%;
+  margin: 0 auto;
+  border-bottom: 1px solid #EEF1FF;
+}
+.group-title {
+  background-color: #F8F9FD;
+  color: #999;
+  font-size: 12px;
+  padding: 10px;
+}
+.group-bottom {
+  background-color: #F8F9FD;
+  color: #999;
+  font-size: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+.circle {
+  width: 13px;
+  height: 13px;
+  border-radius: 7px;
+  border: 1px solid #666;
+}
+.phone-number-popup {
+  width: 700rpx;
+  background-color: #fff;
+  border-radius: 8px;
+}
+.phone-muber-popup-flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding:10px;
+  border-bottom: 1px solid #999;
+}
+.phone-muber-popup-flex-item {
+  padding:10px;
+}
+.phone-number-popup-change {
+  text-align: center;
+  padding:10px;
+  color:#f85600;
+}
+.region-info{
+  padding-left:15px;padding-right:10px;font-size:14px;
+  padding-bottom:10px;
+}

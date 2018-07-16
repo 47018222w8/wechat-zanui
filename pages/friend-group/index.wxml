@@ -1,0 +1,60 @@
+<view>
+  <view class="flex-b">
+    <image class="flex-b-item-a" src="http://58.87.98.173:9008/img/index-b.png"></image>
+    <view>
+      <view style="font-weight:600">{{info.goodsName}}</view>
+      <view style="color:#fd5801;font-size:12px;">{{num}}人拼团 已参加{{allCount}}张</view>
+      <!-- <view style="padding-left:5px;">存50送50</view> -->
+    </view>
+  </view>
+  <view class="flex-a">
+    <view class="flex-a-item">全程包邮</view>
+    <view class="flex-a-item">专属客户经理</view>
+    <view class="flex-a-item">上门办理</view>
+
+  </view>
+  <view>
+    <view class="flex-c">
+      <image class="userinfo-avatar" src="{{info.avatarUrl}}"></image>
+      <view class="why-cicle">?</view>
+    </view>
+  </view>
+  <view style="font-size:14px;color:#666;padding-bottom:10px;text-align:center;">
+    <text>剩余{{num}}个名额,</text>
+    <text class="">{{h}}</text>:
+    <text class="">{{m}}</text>:
+    <text class="">{{s}}</text>
+    <text>后结束</text>
+  </view>
+
+  <view style="display:flex;">
+    <button bindtap="toOrder" style="width:80%;background-color:#ff8000;color:#fff;margin-bottom:10px;">一键拼团</button>
+  </view>
+  <view class="c-hr"></view>
+  <view class="c-bottom">
+    <view style="font-size:14px;color:#666;font-weight:600;padding-left:10px;">拼单须知</view>
+    <view style="font-size:12px;color:#666;padding-right:10px;">·好友拼单·人满拼单</view>
+  </view>
+ <view style="height:10px;background-color:#F7F7F7"></view>
+<view class="flex-d">
+  <view  bindtap="toHome" style="padding-bottom:5px;padding-right:20px;">
+    <image style="width:18px;height:17px;padding-left:10px;" src="http://58.87.98.173:9008/img/home-a.png"></image>
+    首页
+  </view>
+  <view class="flex-d-item-b" >
+    推荐
+    
+  </view>
+</view>
+<view wx:for="{{goodsList}}" wx:key="{{index}}">
+  <image src="{{goodsImgs[index]}}" class="img-a" />
+  <view class="desc-a">
+    <view class="desc-son-a">【最新特惠】{{item.goodsName}}</view>
+    <view class="desc-son-b">{{item.offeringName}}</view>
+    <view style="text-align:right;">
+      
+      <button style="background: #FD5801;color:#fff;padding-right:10px;" size="mini" bindtap="toGroupBuy" data-id="{{item.offeringId}}">去拼团 ></button>
+    </view>
+  </view>
+  </view>
+</view>

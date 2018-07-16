@@ -3,10 +3,12 @@
   <view class="desc-a">
     <view class="flex-a">
       <view class="flex-a-item-a">【腾讯大王卡】存50送50</view>
-      <view class="flex-a-item-b">距离活动结束仅剩</view>
+      <view class="flex-a-item-b" wx:if="{{activeState===0}}">活动尚未开始</view>
+      <view class="flex-a-item-b" wx:if="{{activeState===1}}">距离活动结束仅剩</view>
+      <view class="flex-a-item-b" wx:if="{{activeState===2}}">活动已结束</view>
     </view>
     <view class="flex-b">
-      <view class="flex-b-item-a">2 人拼团 已参加 99999 人</view>
+      <view class="flex-b-item-a">{{activityList[0].upGroupRule.gpMembersNum}} 人拼团 已参加 {{allCount}} 人</view>
       <view class="flex-b-item-b">
         <text class="time-a">{{h}}</text>时
         <text class="time-a">{{m}}</text>分
@@ -17,25 +19,25 @@
   <view class="desc-b">
     拼团不成功,闪电退款
   </view>
-  <view class="desc-c">
+  <view wx:if="{{groupList.length}}" class="desc-c">
     <view style="display:flex;font-size:12px;padding-bottom:20px;justify-content:space-between;">
       <text>小伙伴在开团，可以直接参与</text>
-      <text style="color:#4A90E2;">更多</text>
+      <!-- <text style="color:#4A90E2;">更多</text> -->
     </view>
     <swiper indicator-dots="{{false}}" autoplay="{{true}}">
       <block wx:for="{{imgUrls}}">
-        <swiper-item>
-          <view class="flex-c" style="border-bottom:1px solid #ebebeb;padding-bottom:10px;">
-            <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}"></image>
+        <swiper-item wx:for="{{groupList}}" wx:for-item="group">
+          <view wx:for="{{group}}" class="flex-c" style="border-bottom:1px solid #ebebeb;padding-bottom:10px;">
+            <image class="userinfo-avatar" src="{{item.avatarUrl}}"></image>
             <view style="color:#666;padding-left:10px;flex:0 0 20%;font-size:16px;">{{userInfo.nickName}}</view>
             <view style="color:#666;flex:0 0 30%;font-size:16px;text-align:center">
               还差
-              <text style="color:#FD5801;font-size:18px;">1</text>人成团
+              <text style="color:#FD5801;font-size:18px;">{{item.num-1}}</text>人成团
             </view>
-            <button size="mini" bindtap="toGroupBuy">去参团</button>
+            <button size="mini" bindtap="toGroupBuy" data-pid="{{item.id}}">去参团</button>
           </view>
 
-          <view class="flex-c" style="padding-top:10px;padding-bottom:10px;">
+          <!-- <view class="flex-c" style="padding-top:10px;padding-bottom:10px;">
             <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}"></image>
             <view style="color:#666;padding-left:10px;flex:0 0 20%;font-size:16px;">{{userInfo.nickName}}</view>
             <view style="color:#666;flex:0 0 30%;font-size:16px;text-align:center">
@@ -43,11 +45,12 @@
               <text style="color:#FD5801;font-size:18px;">1</text>人成团
             </view>
             <button size="mini" bindtap="toGroupBuy">去参团</button>
-          </view>
+          </view> -->
         </swiper-item>
       </block>
     </swiper>
   </view>
+  <view style="text-align:center;color:#333;" wx:else>暂时没有团购哦~</view>
   <view style="background-color:#f7f7f7;height:10px;"></view>
   <view style="margin-bottom:44px;">
   <view style="font-size:16px;color:#666;font-weight:600;padding:10px;">商品详情</view>
@@ -58,7 +61,7 @@
       <image style="height:25px;width:30px;" src="../../image/home.png"></image>
       <view  style="font-size:10px;text-align:center;">首页</view>
     </navigator>
-    <view class="bar-b">单独购买</view>
-    <view class="bar-c">一键开团</view>    
+    <view bindtap="openOrder0" class="bar-b">单独购买</view>
+    <view bindtap="openOrder1" open-type="navigate" class="bar-c">一键开团</view>    
   </view>
 </view>

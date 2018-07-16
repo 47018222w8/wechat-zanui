@@ -1,0 +1,5 @@
+<view style="padding-top:20px;text-align:center;">
+  <icon  type="success" size="100"></icon>
+  <view>提交成功</view>
+  <button bindtap="toHome" style="background-color:#F85600;color:#fff;margin-top:10px;" >返回首页</button>
+</view>

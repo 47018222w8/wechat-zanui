@@ -1,0 +1,48 @@
+<view>
+  <view class="flex-title">
+    <view style="padding:15px;">
+      <view style="font-weight:600;font-size:16px">{{infoA.orderState}}</view>
+    </view>
+    <image style="height: 33rpx;width:100rpx;padding-right:10px;" src="http://58.87.98.173:9008/img/car-a.png"></image>
+  </view>
+  <view class="flex-a">
+    <view style="font-size:14px;color:#333;">
+      <view style="margin-left:10px;">
+        <text space="ensp">{{infoA.custName}}  {{infoA.custPhone}}</text>
+      </view>
+      <view style="margin-left:10px;">
+        <text space="ensp">{{infoA.address}}</text>
+      </view>
+    </view>
+  </view>
+  <view style="height:10px;background-color:#f7f7f7;">
+
+  </view>
+  <view class="flex-d">
+    <view style="font-weight:600;padding-left:14px;">商品</view>
+    <view style="padding-right:10px;color:#666;">
+      <image src="http://58.87.98.173:9008/img/phone.png" style="width:14px;height:16px"></image>
+      商家电话
+    </view>
+  </view>
+  <view class="flex-e">
+    <image class="flex-e-item-a" src="http://58.87.98.173:9008/img/index-b.png"></image>
+    <view>
+      <view>{{info.goodsName}}</view>
+      <!-- <view style="padding-left:5px;">存50送50</view> -->
+    </view>
+  </view>
+  <view style="height:20px;background-color:#fff;">
+
+  </view>
+<view style="height:10px;background-color:#f7f7f7;">
+
+  </view>
+  <view class="c-bottom">
+    <view>订单编号:{{infoA.orderNum}}</view>
+    <view>下单时间:{{infoA.orderDate}}</view>
+    <view>拼单时间:{{infoA.gmtCreateStr}}</view>
+    <view>订单编号:{{infoA.appointTime}}</view>
+
+  </view>
+</view>

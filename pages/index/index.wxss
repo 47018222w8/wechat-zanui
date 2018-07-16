@@ -2,6 +2,7 @@
 
 .slide-image {
   width: 750rpx;
+  height: 410rpx;
 }
 
 .font-hot {
@@ -10,6 +11,9 @@
   padding-top: 10px;
   padding-bottom: 10px;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .img-a {
