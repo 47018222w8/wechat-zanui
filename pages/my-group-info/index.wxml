@@ -32,13 +32,13 @@
       </view>
     </view>
     <view  class="flex-e">
-      <image class="flex-e-item-a" src="http://58.87.98.173:9008/img/index-b.png"></image>
+      <image class="flex-e-item-a" src="{{info.goodsImg}}"></image>
       <view>
         <view>{{info.goodsName}}</view>
         <!-- <view style="padding-left:5px;">存50送50</view> -->
       </view>
     </view>
     <view wx:if="{{info.pid==0}}" class="flex-f">
-      <button class="flex-f-item-b" data-offid="{{info.offeringId}}" data-openid="{{info.openid}}" data-name="{{info.goodsName}}" data-id="{{info.id}}" open-type="share" >邀请好友拼单</button>
+      <button class="flex-f-item-b" data-mm="{{info.memberNum}}" data-offid="{{info.offeringId}}" data-openid="{{info.openid}}" data-name="{{info.goodsName}}" data-id="{{info.id}}" open-type="share" >邀请好友拼单</button>
     </view>
 </view>

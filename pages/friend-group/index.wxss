@@ -71,6 +71,26 @@
   width: 750rpx;
   height: 300rpx;
 }
+.flex-f {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-f-item-a {
+  flex: 0 0 70%;
+  padding-left: 10px;
+  font-size: 16px;
+}
+
+.flex-f-item-a text {
+  font-size: 18px;
+  color: #fd5801;
+  font-weight: 600;
+}
+.flex-f button {
+  background: #fd5801;
+  color: #fff;
+}
 .desc-a {
   padding-top:10px;
   padding-bottom:10px;

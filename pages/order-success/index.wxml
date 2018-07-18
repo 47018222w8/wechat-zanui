@@ -7,7 +7,8 @@
       还差{{num}}人，点击右上角发送给朋友
     </view>
     <view>
-      <button open-type="share" style="width:80%;background-color:#ff8000;color:#fff;">邀请好友拼单</button>
+      <button open-type="share" style="width:80%;background-color:#ff8000;color:#fff;margin-bottom:10px;">邀请好友拼单</button>
+      <button bindtap="toHome" style="width:80%;">返回首页</button>
     </view>
     <!-- <view style="background-color:#f7f7f7;height:10px;margin-top:20px;"></view>
     <view style="padding-left:10px;">

@@ -11,15 +11,15 @@
       <view wx:if="{{item.done==1}}">已完成</view>
       <view wx:if="{{item.done==2}}" >已结束</view>
     </view>
-    <view bindtap="toInfo" data-id="{{item.id}}" class="flex-b">
-      <image class="flex-b-item-a" src="http://58.87.98.173:9008/img/index-b.png"></image>
+    <view bindtap="toInfo" data-id="{{item.id}}" data-oid="{{item.offeringId}}" class="flex-b">
+      <image class="flex-b-item-a" src="{{item.goodsImg}}"></image> 
       <view>
         <view>{{item.goodsName}}</view>
         <!-- <view style="padding-left:5px;">存50送50</view> -->
       </view>
     </view>
     <view wx:if="{{item.pid==0}}" class="flex-c">
-      <button class="flex-c-item-b" data-offid="{{item.offeringId}}" data-openid="{{item.openid}}" data-name="{{item.goodsName}}" data-id="{{item.id}}" open-type="share" >邀请好友拼单</button>
+      <button class="flex-c-item-b" data-mm="{{item.memberNum}}" data-offid="{{item.offeringId}}" data-openid="{{item.openid}}" data-name="{{item.goodsName}}" data-id="{{item.id}}" open-type="share" >邀请好友拼单</button>
     </view>
   </view>
   <view wx:if="{{!list.length}}" style="text-align:center;background-color:#fff;">暂无拼团</view>

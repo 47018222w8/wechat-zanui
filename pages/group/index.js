@@ -6,10 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    app:app,
     hasUserInfo: false,
-    imgUrls: [
-      'http://58.87.98.173:9008/img/1.jpg', 'http://58.87.98.173:9008/img/2.jpg'
-    ],
     timer: null,
     // 0:团购未开始,1:团购进行中,2:团购已结束
     activeState: 0,
@@ -25,80 +23,47 @@ Page({
   },
   toGroupBuy: function(e) {
     wx.navigateTo({
-      url: '/pages/order/index?orderType=1&offeringId=' + this.data.offeringId + '&pid=' + e.target.dataset.pid + '&memberNum=' + this.data.activityList[0].upGroupRule.gpMembersNum + '&goodsName=' + this.data.detail.goodsName
+      url: '/pages/order/index?orderType=1&offeringId=' + this.data.offeringId + '&pid=' + e.target.dataset.pid + '&memberNum=' + this.data.numB + '&goodsName=' + this.data.detail.goodsName + '&groupBuyingId=' + this.data.groupBuyingId + '&qrCode=' + this.data.qrCode + '&endDate=' + this.data.endDate + '&goodsType=' + this.data.detail.goodsType
     })
   },
   openOrder1: function() {
     wx.navigateTo({
-      url: '/pages/order/index?pid=0&orderType=1&offeringId=' + this.data.offeringId + '&memberNum=' + this.data.activityList[0].upGroupRule.gpMembersNum + '&goodsName=' + this.data.detail.goodsName
+      url: '/pages/order/index?pid=0&orderType=1&offeringId=' + this.data.offeringId + '&memberNum=' + this.data.numB + '&goodsName=' + this.data.detail.goodsName + '&groupBuyingId=' + this.data.groupBuyingId + '&qrCode=' + this.data.qrCode + '&endDate=' + this.data.endDate + '&goodsType=' + this.data.detail.goodsType
     })
   },
   openOrder0: function() {
     wx.navigateTo({
-      url: '/pages/order/index?pid=0&orderType=0&offeringId=' + this.data.offeringId + '&memberNum=' + this.data.activityList[0].upGroupRule.gpMembersNum + '&goodsName=' + this.data.detail.goodsName
+      url: '/pages/order/index?pid=0&orderType=0&offeringId=' + this.data.offeringId + '&memberNum=' + this.data.numB + '&goodsName=' + this.data.detail.goodsName + '&groupBuyingId=' + this.data.groupBuyingId + '&qrCode=' + this.data.qrCode + '&endDate=' + this.data.endDate + '&goodsType=' + this.data.detail.goodsType
     })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    if (!wx.getStorageSync('activityList')) {
-      this.getGroupActivites()
-    }
-    if (!wx.getStorageSync('openid')) {
-      this.getOpenId()
-    }
     this.setData({
-      offeringId: options.offeringId
+      offeringId: options.offeringId,
+      groupBuyingId: options.groupBuyingId,
+      numB:options.numB,
+      qrCode:options.qrCode
     })
     this.getGoodsInfo()
     this.getGroupInfo()
-    let arrBegin = options.beginDate.split(/[- : \/]/)
-    let arrEnd = options.endDate.split(/[- : \/]/)
-    let beginDate = new Date(arrBegin[0], arrBegin[1] - 1, arrBegin[2], arrBegin[3], arrBegin[4], arrBegin[5]).getTime()
-    let endDate = new Date(arrEnd[0], arrEnd[1]-1, arrEnd[2], arrEnd[3], arrEnd[4], arrEnd[5]).getTime()
-    let now = new Date().getTime()
-    if (beginDate < now < endDate) {
-      
-      this.setData({
-        activeState: 1,
-        endDate: endDate,
-        activityList: wx.getStorageSync('activityList')
-      })
-      this.countTime()
-    }
-    if (now > endDate) {
-      this.setData({
-        activeState: 2
-      })
-    }
+    
   },
-  getGroupActivites() {
-    wx.request({
-      url: app.globalData.urlHeaderB + 'product/v1/activity/queryGroupActivities',
-      data: {
-        pageNumber: 1,
-        pageSize: 10,
-        activityName: '团购',
-        touchId: '',//正式需要获取
-        activityType: '2'
-      },
-      method: 'POST',
-      success: (res) => {
-        if (res.data.code === 0) {
-          this.setData({
-            activityList: wx.getStorageSync('activityList')
-          })
-          wx.setStorageSync('activityList', res.data.activityList)
-        }
-      },
-      faile: (res) => {
-        wx.hideLoading()
-        wx.showToast({
-          title: '服务器错误',
-          icon: 'none'
-        })
-      }
+  imgHA: function (e) {
+    var imgh = e.detail.height;　
+    var imgw = e.detail.width;
+    var h = 750 * imgh / imgw + 'rpx'
+    this.setData({
+      hA: h //设置高度
+    })
+  },
+  imgHB: function (e) {
+    var imgh = e.detail.height;
+    var imgw = e.detail.width;
+    var h = 750 * imgh / imgw + 'rpx'
+    this.setData({
+      hB: h //设置高度
     })
   },
   getGoodsInfo() {
@@ -109,9 +74,57 @@ Page({
         eparchyCode: 431
       },
       success: (res) => {
-        this.setData({
-          detail: res.data.offeringDetail
+        let titleImg = ''
+        let infoImg = ''
+        let goodsImg = ''
+        res.data.offeringDetail.picList.forEach(item=>{
+          if (item.picUseType === "3" ) {
+            if (item.picUrl.indexOf('http')===-1) {
+              infoImg = app.globalData.urlHeaderC + item.picUrl
+            }else {
+              infoImg = item.picUrl
+            }
+          }
+          if (item.picUseType === "2") {
+            if (item.picUrl.indexOf('http') === -1) {
+              titleImg = app.globalData.urlHeaderC + item.picUrl
+            } else {
+              titleImg = item.picUrl
+            }
+            wx.setStorageSync('titleImg', titleImg)
+          }
+          if (item.picUseType === "1") {
+            if (item.picUrl.indexOf('http') === -1) {
+              goodsImg = app.globalData.urlHeaderC + item.picUrl
+            } else {
+              goodsImg = item.picUrl
+            }
+            wx.setStorageSync('goodsImg', goodsImg)
+          }
         })
+        this.setData({
+          detail: res.data.offeringDetail,
+          infoImg: infoImg,
+          titleImg: titleImg
+        })
+
+        let arrBegin = this.data.detail.effectiveDate.split(/[- : \/]/)
+        let arrEnd = this.data.detail.expireDate.split(/[- : \/]/)
+        let beginDate = new Date(arrBegin[0], arrBegin[1] - 1, arrBegin[2], arrBegin[3], arrBegin[4], arrBegin[5]).getTime()
+        let endDate = new Date(arrEnd[0], arrEnd[1] - 1, arrEnd[2], arrEnd[3], arrEnd[4], arrEnd[5]).getTime()
+        let now = new Date().getTime()
+        if (beginDate < now < endDate) {
+          this.setData({
+            activeState: 1,
+            endDate: endDate
+          })
+          this.countTime()
+        }
+        if (now > endDate) {
+          this.setData({
+            activeState: 2
+          })
+        }
       },
       faile: (res) => {
         wx.showToast({
@@ -122,6 +135,17 @@ Page({
     })
   },
   getGroupInfo() {
+    wx.request({
+      url: app.globalData.urlHeaderA + 'orderNums',
+      data: {
+        groupBuyingId: this.data.offeringId
+      },
+      success: (resA) => {
+        this.setData({
+          numA: resA.data
+        })
+      }
+    })
     wx.login({
       success: (data) => {
         wx.request({
@@ -149,7 +173,6 @@ Page({
                   allCount: res.data.allCount,
                   groupList: groupList
                 })
-                console.log(groupList)
               },
               faile: (res) => {
                 wx.showToast({
@@ -223,33 +246,11 @@ Page({
     return {
       title: '拼啦！5折捡漏就差你',
       // path: 'pages/index/index'
-      path: '/pages/group/index?offeringId=' + this.data.offeringId + '&beginDate=' + this.data.activityList[0].effectiveDate + '&endDate=' + this.data.activityList[0].expireDate
+      path: '/pages/group/index?offeringId=' + this.data.offeringId +
+      '&groupBuyingId=' + this.data.groupBuyingId + '&numA=' + this.data.numA + '&numB=' + this.data.numB
     }
   },
-  getUserInfo: function() {
-    var that = this
 
-    if (app.globalData.hasLogin === false) {
-      // wx.login({
-      //   success: _getUserInfo
-      // })
-      _getUserInfo()
-    } else {
-      _getUserInfo()
-    }
-
-    function _getUserInfo() {
-      wx.getUserInfo({
-        success: function(res) {
-          that.setData({
-            hasUserInfo: true,
-            userInfo: res.userInfo
-          })
-          that.update()
-        }
-      })
-    }
-  },
   countTime: function() {
     this.data.timer = setTimeout((e) => {
       //获取当前时间

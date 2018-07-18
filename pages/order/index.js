@@ -207,10 +207,32 @@ Page({
       orderType: +options.orderType,
       pid: +options.pid,
       offeringId: options.offeringId,
-      goodsName: options.goodsName
+      goodsName: options.goodsName,
+      titleImg: wx.getStorageSync('titleImg'),
+      memberNum: options.memberNum,
+      groupBuyingId: options.groupBuyingId,
+      qrCode: options.qrCode,
+      endDate: options.endDate,
+      goodsType: +options.goodsType
+    })
+  },
+  imgHA: function(e) {
+    var imgh = e.detail.height;
+    var imgw = e.detail.width;
+    var h = 750 * imgh / imgw + 'rpx'
+    this.setData({
+      hA: h //设置高度
     })
   },
   subOrder: function(e) {
+    if (this.data.goodsType === 1) {
+      this.subOrderA(e)
+    } else {
+      this.subOrderB(e)
+    }
+
+  },
+  subOrderA(e) {
     const RE_PHONE = /1[3|4|5|7|8|][0-9]{9}/
     if (!RE_PHONE.test(this.data.mobile)) {
       wx.showToast({
@@ -274,12 +296,16 @@ Page({
                   pid: this.data.pid,
                   addressCityCode: this.data.addressCityCode,
                   openid: wx.getStorageSync('openid'),
-                  memberNum: wx.getStorageSync('activityList')[0].upGroupRule.gpMembersNum,
+                  memberNum: this.data.memberNum,
                   offeringId: this.data.offeringId,
                   mobile: this.data.mobile,
                   goodsName: this.data.goodsName,
                   nickName: nickName,
-                  avatarUrl: avatarUrl
+                  avatarUrl: avatarUrl,
+                  groupBuyingId: this.data.groupBuyingId,
+                  goodsImg: wx.getStorageSync('goodsImg'),
+                  qrCode: this.data.qrCode,
+                  goodsType: this.data.goodsType
                 }
                 this.setData({
                   disabled: true
@@ -292,16 +318,24 @@ Page({
                   success: (resA) => {
                     wx.hideLoading()
                     if (data.pid === 0 && data.orderType === 0) {
-
-                      wx.reLaunch({
-                        url: '/pages/success/index'
-                      })
-
+                      if (resA.data.code === '0') {
+                        wx.reLaunch({
+                          url: '/pages/success/index'
+                        })
+                      } else {
+                        wx.showToast({
+                          title: resA.data.message,
+                          icon: 'none'
+                        })
+                        this.setData({
+                          disabled: false
+                        })
+                      }
                     } else if (data.pid === 0 && data.orderType === 1) {
-                      wx.navigateTo({
+                      wx.reLaunch({
                         url: '/pages/order-success/index?pid=' + resA.data + '&orderType=1' +
                           '&offeringId=' + this.data.offeringId + '&goodsName=' + this.data.goodsName +
-                          '&openid=' + data.openid
+                          '&openid=' + data.openid + '&qrCode=' + this.data.qrCode + '&memberNum=' + this.data.memberNum + '&endDate=' + this.data.endDate + '&goodsType=' + data.goodsType
                       })
                     } else {
                       wx.reLaunch({
@@ -349,6 +383,128 @@ Page({
       }
     })
 
+  },
+  subOrderB(e) {
+    if (!this.data.addressCityCode) {
+      wx.showToast({
+        title: '请选择所在地',
+        icon: 'none'
+      })
+      return
+    }
+    if (!this.data.address) {
+      wx.showToast({
+        title: '请输入详细地址',
+        icon: 'none'
+      })
+      return
+    }
+    wx.showLoading({
+      title: '加载中'
+    })
+    wx.request({
+      url: app.globalData.urlHeaderB + 'v1/checkService/idCardCheck',
+      data: {
+        name: this.data.customerName,
+        idCard: this.data.number
+      },
+      success: (res) => {
+        if (res.data.code === 0) {
+          // 测试用
+          if (true || result.data.code === 0) {
+            let jo = null
+            let nickName = ''
+            let avatarUrl = ''
+            if (e.detail.rawData) {
+              jo = JSON.parse(e.detail.rawData)
+              nickName = jo.nickName
+              avatarUrl = jo.avatarUrl
+            }
+
+            let data = {
+              address: this.data.addressCity + this.data.address,
+              cityCode: this.data.cityCode,
+              accountNumber: this.data.accountNumber,
+              number: this.data.number,
+              customerName: this.data.customerName,
+              orderType: +this.data.orderType,
+              done: 0,
+              pid: this.data.pid,
+              addressCityCode: this.data.addressCityCode,
+              openid: wx.getStorageSync('openid'),
+              memberNum: this.data.memberNum,
+              offeringId: this.data.offeringId,
+              mobile: this.data.mobile,
+              goodsName: this.data.goodsName,
+              nickName: nickName,
+              avatarUrl: avatarUrl,
+              groupBuyingId: this.data.groupBuyingId,
+              goodsImg: wx.getStorageSync('goodsImg'),
+              qrCode: this.data.qrCode,
+              goodsType: this.data.goodsType
+            }
+            this.setData({
+              disabled: true
+            })
+            //发起网络请求
+            wx.request({
+              url: app.globalData.urlHeaderA + 'orders',
+              data: data,
+              method: 'POST',
+              success: (resA) => {
+                wx.hideLoading()
+                if (data.pid === 0 && data.orderType === 0) {
+                  if (resA.data.code === '0') {
+                    wx.reLaunch({
+                      url: '/pages/success/index'
+                    })
+                  } else {
+                    wx.showToast({
+                      title: resA.data.message,
+                      icon: 'none'
+                    })
+                    this.setData({
+                      disabled: false
+                    })
+                  }
+                } else if (data.pid === 0 && data.orderType === 1) {
+                  wx.reLaunch({
+                    url: '/pages/order-success/index?pid=' + resA.data + '&orderType=1' +
+                      '&offeringId=' + this.data.offeringId + '&goodsName=' + this.data.goodsName +
+                      '&openid=' + data.openid + '&qrCode=' + this.data.qrCode + '&memberNum=' + this.data.memberNum + '&endDate=' + this.data.endDate + '&goodsType=' + data.goodsType
+                  })
+                } else {
+                  wx.reLaunch({
+                    url: '/pages/success/index'
+                  })
+                }
+
+              }
+            })
+          } else {
+            wx.hideLoading()
+            wx.showToast({
+              title: result.data.msg,
+              icon: 'none'
+            })
+          }
+        } else {
+          wx.hideLoading()
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none'
+          })
+        }
+
+      },
+      fail: () => {
+        wx.hideLoading()
+        wx.showToast({
+          title: '未知错误',
+          icon: 'none'
+        })
+      }
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

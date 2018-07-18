@@ -26,26 +26,42 @@ view {
   color: #333;
   font-family: PingFangSC-Semibold;
 }
+
 .flex-a {
   display: flex;
   flex-direction: row;
 }
+
 .flex-a-item-a {
-  flex:0 0 70%;padding-left:10px;font-size:16px;
+  flex: 0 0 70%;
+  padding-left: 10px;
+  font-size: 16px;
 }
+
 .flex-a-item-a text {
-  font-size:18px;color:#FD5801;font-weight:600;
+  font-size: 18px;
+  color: #fd5801;
+  font-weight: 600;
 }
+
 .flex-a button {
-  background: #FD5801;color:#fff;
+  background: #fd5801;
+  color: #fff;
 }
+
 .desc-a {
-  padding-top:10px;
-  padding-bottom:10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
-.desc-son-a{
-  font-size:16px;font-weight:600;
+
+.desc-son-a {
+  font-size: 16px;
+  font-weight: 600;
+  padding-left: 10px;
 }
+
 .desc-son-b {
-  padding-left:10px;padding-top:10px;padding-bottom:10px;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }

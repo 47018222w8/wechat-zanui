@@ -1,19 +1,21 @@
 <view>
-  <image style="padding:10rpx;width:730rpx;height:300rpx" src="http://58.87.98.173:9008/img/index-a.png"></image>
-  <view class="group-title">
-    选择号码
-  </view>
-  <view class="flex-input" style="padding-bottom:10px;">
-    <view class="flex-input-title">号码归属</view>
-    <picker class="flex-picker" mode="selector" range="{{regions}}" bindchange="choosePhoneCity" range-key="name">
-      <text wx:if="{{cityCode}}" style="color:black;">{{phoneCity}}</text>
-      <text wx:else style="color:#999;">请选择归属地 ></text>
-    </picker>
-  </view>
-  <view class="input-hr"></view>
-  <view class="flex-input">
-    <view class="flex-input-title">选择号码</view>
-    <input value="{{accountNumber}}" disabled="{{true}}" class="flex-input-value" bindtap="chooseNumber" placeholder="请选择号码"></input>
+  <image bindload="imgHA" style="width:750rpx;height:{{hA}}" src="{{titleImg}}"></image>
+  <view wx:if="{{goodsType===1}}">
+    <view class="group-title">
+      选择号码
+    </view>
+    <view class="flex-input" style="padding-bottom:10px;">
+      <view class="flex-input-title">号码归属</view>
+      <picker class="flex-picker" mode="selector" range="{{regions}}" bindchange="choosePhoneCity" range-key="name">
+        <text wx:if="{{cityCode}}" style="color:black;">{{phoneCity}}</text>
+        <text wx:else style="color:#999;">请选择归属地 ></text>
+      </picker>
+    </view>
+    <view class="input-hr"></view>
+    <view class="flex-input">
+      <view class="flex-input-title">选择号码</view>
+      <input value="{{accountNumber}}" disabled="{{true}}" class="flex-input-value" bindtap="chooseNumber" placeholder="请选择号码"></input>
+    </view>
   </view>
   <view class="group-title">
     用户信息
@@ -25,7 +27,7 @@
   <view class="input-hr"></view>
   <view class="flex-input">
     <view class="flex-input-title">身份证</view>
-    <input value="{{number}}" bindinput="numberInput" class="flex-input-value"  maxlength="20" placeholder="请输入入网身份证号"></input>
+    <input value="{{number}}" bindinput="numberInput" class="flex-input-value" maxlength="20" placeholder="请输入入网身份证号"></input>
   </view>
   <view class="input-hr"></view>
   <view class="flex-input">
@@ -42,13 +44,14 @@
       <text wx:else style="color:#999;">请选择城市 ></text>
     </picker>
   </view>
-  <textarea bindinput="addressInput" value="{{address}}" class="region-info" placeholder="街道/镇+村/小区/写字楼+门牌号" auto-height="true" placeholder-style="font-size:14px;"></textarea>
+  <textarea bindinput="addressInput" value="{{address}}" class="region-info" placeholder="街道/镇+村/小区/写字楼+门牌号" auto-height="true" placeholder-style="font-size:14px;margin-top:5px;"></textarea>
   <view class="group-bottom" bindtap="readTap">
     <icon hidden="{{!readDone}}" type="success" size="{{15}}"></icon>
     <view hidden="{{readDone}}" class="circle"></view>
     <text style="color:#999;font-size:10px;padding-left:7px;">我已经阅读并同意《新用户入网协议》</text>
   </view>
-  <button open-type="getUserInfo" bindgetuserinfo="subOrder" disabled="{{disabled}}" style="background-color:#F85600;color:#fff;" >提交订单</button>
+  <button open-type="getUserInfo" bindgetuserinfo="subOrder" disabled="{{disabled}}" style="background-color:#F85600;color:#fff;">提交订单</button>
+  <view style="text-align:center;color:#999;font-size:10px;padding-left:7px;">本次为阶段性优惠活动,数量有限,对恶意批量下单将不予发货本卡及相应服务由中国联通为您提供</view>
   <zan-popup show="{{ showNumberPopup }}" bindclose="phoneNumberPopup">
     <view class="phone-number-popup">
       <view class="phone-muber-popup-flex">

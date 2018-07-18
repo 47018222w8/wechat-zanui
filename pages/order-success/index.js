@@ -18,20 +18,25 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let list = wx.getStorageSync('activityList')
-    let arrEnd = list[0].expireDate.split(/[- : \/]/)
     this.setData({
       orderType: +options.orderType,
       pid: +options.pid,
       offeringId: options.offeringId,
       goodsName: options.goodsName,
       openid: options.openid,
-      num: list[0].upGroupRule.gpMembersNum - 1,
-      endDate: new Date(arrEnd[0], arrEnd[1] - 1, arrEnd[2], arrEnd[3], arrEnd[4], arrEnd[5]).getTime()
+      num: options.memberNum - 1,
+      endDate: options.endDate,
+      qrCode: options.qrCode,
+      memberNum: options.memberNum,
+      goodsType: options.goodsType
     })
     this.countTime()
   },
-
+  toHome() {
+    wx.reLaunch({
+      url: '/pages/index/index'
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -88,7 +93,8 @@ Page({
       // path: 'pages/index/index'
       path: '/pages/friend-group/index?pid=' + this.data.pid + '&orderType=1' +
       '&offeringId=' + this.data.offeringId + '&goodsName=' + this.data.goodsName
-      + '&openid=' + this.data.openid
+      + '&openid=' + this.data.openid + '&qrCode=' + this.data.qrCode + '&memberNum=' + this.data.memberNum + '&goodsType=' + this.data.goodsType
+      + '&endDate=' +this.data.endDate
     }
   },
   countTime: function () {

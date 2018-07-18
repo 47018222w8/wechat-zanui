@@ -14,6 +14,7 @@ Page({
     num: null,
     info: null,
     allCount: 0,
+    countArry: [],
     goodsImgs: [
       'http://58.87.98.173:9008/img/index-b.png',
       'http://58.87.98.173:9008/img/index-c.png',
@@ -29,37 +30,86 @@ Page({
    */
   onLoad: function(options) {
     this.getGroupActivites()
-    let list = wx.getStorageSync('activityList')
-    let arrEnd = list[0].expireDate.split(/[- : \/]/)
     this.setData({
       orderType: +options.orderType,
       pid: +options.pid,
       offeringId: options.offeringId,
       goodsName: options.goodsName,
       pOpenid: options.openid,
-      endDate: new Date(arrEnd[0], arrEnd[1] - 1, arrEnd[2], arrEnd[3], arrEnd[4], arrEnd[5]).getTime(),
-      num: list[0].upGroupRule.gpMembersNum - 1,
-      goodsList: list[0].offeringList,
-      activityList: list
+      memberNum: options.memberNum,
+      qrCode: options.qrCode
+      
     })
     this.countTime()
     this.getOpenId()
 
-    this.getGoodsInfo()
-
     this.getOrder()
 
-    this.getGroupInfo()
-
+    this.getGoodsInfo()
+    this.getGroupActivites()
   },
   toHome() {
     wx.reLaunch({
       url: '/pages/index/index'
     })
   },
-  toGroupBuy: function(e) {
+  toGroupBuy: function (e) {
+    let u = '/pages/group/index?offeringId=' + e.currentTarget.dataset.goodsid +
+      '&groupBuyingId=' + e.currentTarget.dataset.groupid + '&numA=' + e.currentTarget.dataset.numa + '&numB=' + e.currentTarget.dataset.numb + '&qrCode=' + this.data.qrCode + '&goodsType=' + this.data.goodsType
     wx.navigateTo({
-      url: '/pages/group/index?offeringId=' + e.target.dataset.id + '&beginDate=' + this.data.activityList[0].effectiveDate + '&endDate=' + this.data.activityList[0].expireDate
+      url: u
+    })
+  },
+  getGoodsInfo() {
+    wx.request({
+      url: app.globalData.urlHeaderB + 'product/v1/offering/getOffer',
+      data: {
+        offeringId: this.data.offeringId,
+        eparchyCode: 431
+      },
+      success: (res) => {
+        let titleImg = ''
+        let infoImg = ''
+        let goodsImg = ''
+        res.data.offeringDetail.picList.forEach(item => {
+          if (item.picUseType === "3") {
+            if (item.picUrl.indexOf('http') === -1) {
+              infoImg = app.globalData.urlHeaderC + item.picUrl
+            } else {
+              infoImg = item.picUrl
+            }
+          }
+          if (item.picUseType === "2") {
+            if (item.picUrl.indexOf('http') === -1) {
+              titleImg = app.globalData.urlHeaderC + item.picUrl
+            } else {
+              titleImg = item.picUrl
+            }
+            wx.setStorageSync('titleImg', titleImg)
+          }
+          if (item.picUseType === "1") {
+            if (item.picUrl.indexOf('http') === -1) {
+              goodsImg = app.globalData.urlHeaderC + item.picUrl
+            } else {
+              goodsImg = item.picUrl
+            }
+            wx.setStorageSync('goodsImg', goodsImg)
+          }
+        })
+        let arrEnd = res.data.offeringDetail.expireDate.split(/[- : \/]/)
+        let endDate = new Date(arrEnd[0], arrEnd[1] - 1, arrEnd[2], arrEnd[3], arrEnd[4], arrEnd[5]).getTime()
+        this.setData({
+          endDate: endDate,
+          goodsType: res.data.offeringDetail.goodsType,
+          detail: res.data.offeringDetail
+        })
+      },
+      faile: (res) => {
+        wx.showToast({
+          title: '服务器错误',
+          icon: 'none'
+        })
+      }
     })
   },
   getOrder() {
@@ -78,61 +128,32 @@ Page({
       }
     })
   },
-  getGoodsInfo() {
-    wx.request({
-      url: app.globalData.urlHeaderB + 'product/v1/offering/getOffer',
-      data: {
-        offeringId: this.data.offeringId,
-        eparchyCode: 431
-      },
-      success: (res) => {
-        this.setData({
-          detail: res.data.offeringDetail
-        })
-      },
-      faile: (res) => {
-        wx.showToast({
-          title: '服务器错误',
-          icon: 'none'
-        })
-      }
-    })
-  },
-  getGroupInfo() {
-    wx.request({
-      url: app.globalData.urlHeaderA + 'groups',
-      data: {
-        offeringId: this.data.offeringId,
-        openid: wx.getStorageSync('openid')
-      },
-      success: (res) => {
-
-        this.setData({
-          allCount: res.data.allCount
-        })
-      },
-      faile: (res) => {
-        wx.showToast({
-          title: '服务器错误',
-          icon: 'none'
-        })
-      }
-    })
-  },
+ 
   getGroupActivites() {
     wx.request({
       url: app.globalData.urlHeaderB + 'product/v1/activity/queryGroupActivities',
-      data: {
-        pageNumber: 1,
-        pageSize: 10,
-        activityName: '团购',
-        touchId: '', //正式需要获取
-        activityType: '2'
-      },
+      data: {},
       method: 'POST',
       success: (res) => {
         if (res.data.code === 0) {
-          wx.setStorageSync('activityList', res.data.activityList)
+          res.data.activityList.forEach(item => {
+            wx.request({
+              url: app.globalData.urlHeaderA + 'orderNums',
+              data: {
+                groupBuyingId: item.offeringId
+              },
+              success: (resA) => {
+                let arry = this.data.countArry
+                arry.push(resA.data)
+                this.setData({
+                  countArry: arry
+                })
+              }
+            })
+          })
+          this.setData({
+            activityList: res.data.activityList
+          })
         }
       },
       faile: (res) => {
@@ -173,7 +194,7 @@ Page({
   },
   toOrder: function(e) {
     wx.navigateTo({
-      url: '/pages/order/index?orderType=1&offeringId=' + this.data.offeringId + '&pid=' + this.data.pid + '&memberNum=' + wx.getStorageSync('activityList')[0].upGroupRule.gpMembersNum + '&goodsName=' + this.data.goodsName
+      url: '/pages/order/index?pid='+ this.data.pid +'&orderType=1&offeringId=' + this.data.offeringId + '&memberNum=' + this.data.memberNum + '&goodsName=' + this.data.goodsName + '&groupBuyingId=' + this.data.groupBuyingId + '&qrCode=' + this.data.qrCode + '&goodsType=' + this.data.goodsType
     })
   },
   /**

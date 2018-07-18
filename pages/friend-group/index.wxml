@@ -1,14 +1,14 @@
 <view>
   <view class="flex-b">
-    <image class="flex-b-item-a" src="http://58.87.98.173:9008/img/index-b.png"></image>
+    <image class="flex-b-item-a" src="{{info.goodsImg}}"></image>
     <view>
       <view style="font-weight:600">{{info.goodsName}}</view>
-      <view style="color:#fd5801;font-size:12px;">{{num}}人拼团 已参加{{allCount}}张</view>
+      <view style="color:#fd5801;font-size:12px;">{{memberNum}}人拼团 已参加{{info.num}}张</view>
       <!-- <view style="padding-left:5px;">存50送50</view> -->
     </view>
   </view>
   <view class="flex-a">
-    <view class="flex-a-item">全程包邮</view>
+    <view class="flex-a-item">全场包邮</view>
     <view class="flex-a-item">专属客户经理</view>
     <view class="flex-a-item">上门办理</view>
 
@@ -20,7 +20,7 @@
     </view>
   </view>
   <view style="font-size:14px;color:#666;padding-bottom:10px;text-align:center;">
-    <text>剩余{{num}}个名额,</text>
+    <text>剩余{{memberNum-1}}个名额,</text>
     <text class="">{{h}}</text>:
     <text class="">{{m}}</text>:
     <text class="">{{s}}</text>
@@ -35,26 +35,29 @@
     <view style="font-size:14px;color:#666;font-weight:600;padding-left:10px;">拼单须知</view>
     <view style="font-size:12px;color:#666;padding-right:10px;">·好友拼单·人满拼单</view>
   </view>
- <view style="height:10px;background-color:#F7F7F7"></view>
-<view class="flex-d">
-  <view  bindtap="toHome" style="padding-bottom:5px;padding-right:20px;">
-    <image style="width:18px;height:17px;padding-left:10px;" src="http://58.87.98.173:9008/img/home-a.png"></image>
-    首页
-  </view>
-  <view class="flex-d-item-b" >
-    推荐
-    
-  </view>
-</view>
-<view wx:for="{{goodsList}}" wx:key="{{index}}">
-  <image src="{{goodsImgs[index]}}" class="img-a" />
-  <view class="desc-a">
-    <view class="desc-son-a">【最新特惠】{{item.goodsName}}</view>
-    <view class="desc-son-b">{{item.offeringName}}</view>
-    <view style="text-align:right;">
-      
-      <button style="background: #FD5801;color:#fff;padding-right:10px;" size="mini" bindtap="toGroupBuy" data-id="{{item.offeringId}}">去拼团 ></button>
+  <view style="height:10px;background-color:#F7F7F7"></view>
+  <view class="flex-d">
+    <view bindtap="toHome" style="padding-bottom:5px;padding-right:20px;">
+      <image style="width:18px;height:17px;padding-left:10px;" src="http://58.87.98.173:9008/img/home-a.png"></image>
+      首页
+    </view>
+    <view class="flex-d-item-b">
+      推荐
+
     </view>
   </view>
+  <view wx:for="{{activityList}}" wx:for-index="idx" wx:for-item="active" wx:key="{{idx}}">
+    <view bindtap="toGroupBuy" data-groupid="{{active.offeringId}}" data-goodsid="{{item.offeringId}}" data-numa="{{countArry[idx]}}" data-numb="{{active.upGroupRule.gpMembersNum}}" wx:for="{{active.offeringList}}" wx:key="{{index}}">
+      <image src="{{goodsImgs[index]}}" class="img-a" />
+      <view class="desc-a">
+        <view class="desc-son-a">{{item.goodsName}}</view>
+        <view class="desc-son-b">{{item.offeringName}}</view>
+        <view class="flex-f">
+          <view class="flex-f-item-a">已参与
+            <text>{{countArry[idx]}}</text>人</view>
+          <button size="mini">去拼团 ></button>
+        </view>
+      </view>
+    </view>
   </view>
 </view>

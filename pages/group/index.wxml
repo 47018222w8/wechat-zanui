@@ -1,14 +1,14 @@
 <view>
-  <image src="http://58.87.98.173:9008/img/group-a.png" class="img-a" />
+  <image bindload="imgHA" style="height:{{hA}}" src="{{titleImg}}" class="img-a" />
   <view class="desc-a">
     <view class="flex-a">
-      <view class="flex-a-item-a">【腾讯大王卡】存50送50</view>
+      <view class="flex-a-item-a">{{detail.goodsName}}</view>
       <view class="flex-a-item-b" wx:if="{{activeState===0}}">活动尚未开始</view>
       <view class="flex-a-item-b" wx:if="{{activeState===1}}">距离活动结束仅剩</view>
       <view class="flex-a-item-b" wx:if="{{activeState===2}}">活动已结束</view>
     </view>
     <view class="flex-b">
-      <view class="flex-b-item-a">{{activityList[0].upGroupRule.gpMembersNum}} 人拼团 已参加 {{allCount}} 人</view>
+      <view class="flex-b-item-a">{{numB}} 人拼团 已参加 {{numA}} 人</view>
       <view class="flex-b-item-b">
         <text class="time-a">{{h}}</text>时
         <text class="time-a">{{m}}</text>分
@@ -55,11 +55,11 @@
   <view style="background-color:#f7f7f7;height:10px;"></view>
   <view style="margin-bottom:44px;">
   <view style="font-size:16px;color:#666;font-weight:600;padding:10px;">商品详情</view>
-  <image src="detail.picList[0].picUrl" class="img-a" />
+  <image wx:if="detail" style="height:{{hB}}" src="{{infoImg}}" bindload="imgHB" class="img-a" />
   </view>
   <view class="bottom-bar">
     <navigator url="../index/index" open-type="reLaunch" class="bar-a">
-      <image style="height:25px;width:30px;" src="../../image/home.png"></image>
+      <image style="height:25px;width:30px;" src="../../image/home@3.png"></image>
       <view  style="font-size:10px;text-align:center;">首页</view>
     </navigator>
     <view bindtap="openOrder0" class="bar-b">单独购买</view>
