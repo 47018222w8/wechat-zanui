@@ -1,5 +1,5 @@
 <view>
-  <image bindload="imgHA" style="width:750rpx;height:{{hA}}" src="{{titleImg}}"></image>
+  <image  style="width:750rpx;height:300rpx;" src="{{titleImg}}"></image>
   <view wx:if="{{goodsType===1}}">
     <view class="group-title">
       选择号码

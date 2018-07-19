@@ -15,11 +15,11 @@
       <image wx:else style="height:{{hA}}" src="{{goodsImgs[1]}}" class="img-a" />
       <view class="desc-a">
         <view class="desc-son-a">{{item.goodsName}}</view>
-        <view class="desc-son-b">{{item.offeringName}}</view>
+        <view class="desc-son-b" style="font-size:14px;">{{item.offeringName}}</view>
         <view class="flex-a">
           <view class="flex-a-item-a">已参与
             <text>{{countArry[idx]}}</text>人</view>
-          <button size="mini">去拼团 ></button>
+          <button size="mini">去拼团></button>
         </view>
       </view>
     </view>
