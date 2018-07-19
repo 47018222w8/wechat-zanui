@@ -35,7 +35,6 @@ view {
 .flex-a-item-a {
   flex: 0 0 70%;
   padding-left: 10px;
-  font-size: 16px;
 }
 
 .flex-a-item-a text {
