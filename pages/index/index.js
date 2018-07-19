@@ -10,12 +10,8 @@ Page({
       
     ],
     goodsImgs: [
-      'http://58.87.98.173:9008/img/index-b.png',
-      'http://58.87.98.173:9008/img/index-c.png',
-      'http://58.87.98.173:9008/img/index-b.png',
-      'http://58.87.98.173:9008/img/index-c.png',
-      'http://58.87.98.173:9008/img/index-b.png',
-      'http://58.87.98.173:9008/img/index-c.png',
+      'http://58.87.98.173:9008/img/index-a.png',// 移动
+      'http://58.87.98.173:9008/img/index-b.png'// 融合
     ],
     hei: '',
     activityList: [],

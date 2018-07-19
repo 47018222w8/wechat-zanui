@@ -1,6 +1,6 @@
 <view>
   <swiper indicator-active-color="#fff" indicator-color="#666" style="height:{{hA}}" indicator-dots="{{true}}" autoplay="{{true}}">
-    <block wx:for="{{imgUrls}}">
+    <block wx:for="{{goodsImgs}}">
       <swiper-item>
         <image src="{{item}}" bindload="imgHA" class="slide-image" style="height:{{hA}}" />
       </swiper-item>
@@ -11,7 +11,8 @@
     火拼中</view>
   <view wx:for="{{activityList}}" wx:for-index="idx" wx:for-item="active" wx:key="{{idx}}">
     <view bindtap="toGroupBuy" data-groupid="{{active.offeringId}}" data-goodsid="{{item.offeringId}}"  data-numb="{{active.upGroupRule.gpMembersNum}}" wx:for="{{active.offeringList}}" wx:key="{{index}}">
-      <image style="height:{{hA}}" src="{{imgUrls[idx]}}" class="img-a" />
+      <image wx:if="{{item.goodsType === 1}}" style="height:{{hA}}" src="{{goodsImgs[0]}}" class="img-a" />
+      <image wx:else style="height:{{hA}}" src="{{goodsImgs[1]}}" class="img-a" />
       <view class="desc-a">
         <view class="desc-son-a">{{item.goodsName}}</view>
         <view class="desc-son-b">{{item.offeringName}}</view>
